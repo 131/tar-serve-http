@@ -35,6 +35,8 @@
   "homepage": "https://github.com/131/tar-serve-http#readme",
   "dependencies": {
     "mime": "^2.4.4",
+    "mout": "^1.0.0",
+    "nyks": "^5.12.6",
     "tar-stream": "^1.5.2"
   }
 }
