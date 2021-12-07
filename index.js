@@ -1,7 +1,8 @@
 "use strict";
 
-const url = require('url');
+const url   = require('url');
 const fs    = require('fs');
+const path  = require('path');
 
 const mime  = require('mime');
 const tar   = require('tar-stream');
@@ -18,7 +19,7 @@ const mountTar = function(tar_path) {
     var unpack = tar.extract();
 
     unpack.on('entry', async function(header, stream, next) {
-      contents[header.name] = await drain(stream);
+      contents[path.posix.normalize(header.name)] = await drain(stream);
       next();
     });
 
