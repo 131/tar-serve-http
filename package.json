@@ -1,6 +1,6 @@
 {
   "name": "tar-serve-http",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "expose a tar contents as an http server",
   "main": "index.js",
   "scripts": {
