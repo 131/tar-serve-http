@@ -17,7 +17,7 @@ describe("Minimal test suite", function() {
 
   it("Should start a dummy server", function(done) {
 
-    mount = mountTar(mock_file);
+    mount = mountTar(mock_file, {index : "test.html"});
     server = http.createServer(mount);
 
     server.listen(0, function() {
@@ -29,7 +29,7 @@ describe("Minimal test suite", function() {
 
   it("should expose a simple file", async () => {
 
-    let [res, res2] = await Promise.all([fetch(`http://127.0.0.1:${port}/test.html`), fetch(`http://127.0.0.1:${port}/test2.png/drawing2.png`)]);
+    let [res, res2] = await Promise.all([fetch(`http://127.0.0.1:${port}/`), fetch(`http://127.0.0.1:${port}/test2.png/drawing2.png`)]);
 
     expect(res.statusCode).to.eql(200);
     expect(res.headers['content-type']).to.eql("text/html");
@@ -42,6 +42,13 @@ describe("Minimal test suite", function() {
     expect(challenge2).to.eql("dedba378177d27ad9199a9cba099a2d4");
   });
 
+  it("should test retrieve", async () => {
+    let challenge = md5(await mount.retrieve("test.html"));
+    expect(challenge).to.eql("99592ddbda8174399c5c3e1a52f1d186");
+
+    challenge = md5(await mount.retrieve());
+    expect(challenge).to.eql("99592ddbda8174399c5c3e1a52f1d186");
+  });
 
   it("should reject missing file", async () => {
     let remote_url = `http://127.0.0.1:${port}/nope.html`;
